@@ -20,7 +20,13 @@
   <id>com.freshplanet.KeyboardSize</id>
   <versionNumber>1.0</versionNumber>
   <platforms>
- 
+  <platform name="iPhone-ARM">
+            <applicationDeployment>
+                <nativeLibrary>libKeyboardSize.a</nativeLibrary>
+                <initializer>KeyboardExtensionInitializer</initializer>
+                <finalizer>KeyboardExtensionInitializer</finalizer>
+            </applicationDeployment>
+    </platform>
    <platform name="Android-ARM"> 
         <applicationDeployment> 
             <nativeLibrary>libKeyboardSize.jar</nativeLibrary> 
