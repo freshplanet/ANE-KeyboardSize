@@ -24,12 +24,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		114C255C177B4F9B0044FB68 /* KeyboardSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardSize.h; sourceTree = "<group>"; };
+		114C255D177B502B0044FB68 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = "<group>"; };
 		179F5E98177A3A590017726E /* libKeyboardSize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKeyboardSize.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		179F5E9B177A3A590017726E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		179F5E9F177A3A590017726E /* KeyboardSize-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardSize-Prefix.pch"; sourceTree = "<group>"; };
 		179F5EA2177A3A590017726E /* KeyboardSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyboardSize.m; sourceTree = "<group>"; };
 		179F5EAA177A3A590017726E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		179F5EC3177A3B940017726E /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = "/Applications/Adobe Flash Builder 4.7/sdks/4.6.0/include/FlashRuntimeExtensions.h"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +48,6 @@
 		179F5E8D177A3A590017726E = {
 			isa = PBXGroup;
 			children = (
-				179F5EC3177A3B940017726E /* FlashRuntimeExtensions.h */,
 				179F5E9D177A3A590017726E /* KeyboardSize */,
 				179F5E9A177A3A590017726E /* Frameworks */,
 				179F5E99177A3A590017726E /* Products */,
@@ -75,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				179F5EA2177A3A590017726E /* KeyboardSize.m */,
+				114C255C177B4F9B0044FB68 /* KeyboardSize.h */,
 				179F5E9E177A3A590017726E /* Supporting Files */,
 			);
 			name = KeyboardSize;
@@ -85,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				179F5E9F177A3A590017726E /* KeyboardSize-Prefix.pch */,
+				114C255D177B502B0044FB68 /* FlashRuntimeExtensions.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

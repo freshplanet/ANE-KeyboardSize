@@ -23,8 +23,8 @@
   <platform name="iPhone-ARM">
             <applicationDeployment>
                 <nativeLibrary>libKeyboardSize.a</nativeLibrary>
-                <initializer>KeyboardExtensionInitializer</initializer>
-                <finalizer>KeyboardExtensionInitializer</finalizer>
+                <initializer>KeyboardSizeInitializer</initializer>
+                <finalizer>KeyboardSizeFinalizer</finalizer>
             </applicationDeployment>
     </platform>
    <platform name="Android-ARM"> 
