@@ -29,7 +29,6 @@
 		179F5E9F177A3A590017726E /* KeyboardSize-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardSize-Prefix.pch"; sourceTree = "<group>"; };
 		179F5EA2177A3A590017726E /* KeyboardSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyboardSize.m; sourceTree = "<group>"; };
 		179F5EAA177A3A590017726E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		179F5EAC177A3A590017726E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		179F5EC3177A3B940017726E /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = "/Applications/Adobe Flash Builder 4.7/sdks/4.6.0/include/FlashRuntimeExtensions.h"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -68,7 +67,6 @@
 			children = (
 				179F5E9B177A3A590017726E /* Foundation.framework */,
 				179F5EAA177A3A590017726E /* SenTestingKit.framework */,
-				179F5EAC177A3A590017726E /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -243,6 +241,7 @@
 				179F5EBF177A3A590017726E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

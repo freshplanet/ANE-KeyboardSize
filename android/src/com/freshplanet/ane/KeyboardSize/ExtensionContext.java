@@ -19,7 +19,6 @@ public class ExtensionContext extends FREContext {
 		Map<String, FREFunction> functionMap = new HashMap<String, FREFunction>();
 		functionMap.put("getKeyboardY", new getKeyboardY() );
 		functionMap.put("getKeyboardHeight", new getKeyboardHeight() );
-		functionMap.put("initMe", new initFunction() );
 		functionMap.put("setKeyboardAdjustNothing",new setKeyboardAdjustNothing() );
 		
 		return functionMap;

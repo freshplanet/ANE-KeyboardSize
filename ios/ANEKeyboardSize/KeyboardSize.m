@@ -2,7 +2,7 @@
 //  ANEKeyboardSize.m
 //  ANEKeyboardSize
 //
-//  Created by Li on 6/25/13.
+//  Created by Li on 6/15/13.
 //  Copyright (c) 2013 Li. All rights reserved.
 //
 #import "FlashRuntimeExtensions.h"
@@ -34,24 +34,20 @@ FREObject setKeyboardAdjustNothing(FREContext ctx, void* functData, uint32_t arg
 
 void ExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctions, const FRENamedFunction** functionsToSet)
 {
-    *numFunctions = 4;
+    *numFunctions = 3;
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctions);
     
-    func[0].name = (const uint8_t*)"initFunction";
+    func[0].name = (const uint8_t*)"getKeyboardY";
     func[0].functionData = NULL;
-    func[0].function = &initFunction;
+    func[0].function = &getKeyboardY;
     
-    func[1].name = (const uint8_t*)"getKeyboardY";
+    func[1].name = (const uint8_t*)"getKeyboardHeight";
     func[1].functionData = NULL;
-    func[1].function = &getKeyboardY;
+    func[1].function = &getKeyboardHeight;
     
-    func[2].name = (const uint8_t*)"getKeyboardHeight";
+    func[2].name = (const uint8_t*)"setKeyboardAdjustNothing";
     func[2].functionData = NULL;
-    func[2].function = &getKeyboardHeight;
-    
-    func[3].name = (const uint8_t*)"setKeyboardAdjustNothing";
-    func[3].functionData = NULL;
-    func[3].function = &setKeyboardAdjustNothing;
+    func[2].function = &setKeyboardAdjustNothing;
     
     *functionsToSet = func;
 }
