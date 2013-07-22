@@ -1,21 +1,21 @@
 Air Native Extension to measure soft keyboard size (Android)
 ======================================
 
-This is an [Air native extension](http://www.adobe.com/devnet/air/native-extensions-for-air.html) that measure the soft keyboard size, because the actionscript method *flash.display.Stage.softKeyboardRect():Rectangle* doesn't return a correct value in Android.
+This is an [Air native extension](http://www.adobe.com/devnet/air/native-extensions-for-air.html) that measures the soft keyboard size, because the actionscript method `flash.display.Stage.softKeyboardRect():Rectangle` doesn't return a correct value in Android.
 
 Usage
 -----
 
-	```actionscript
-	//get the height of the keyboard
-	var keyboardHeight:Number = MeasureKeyboard.getInstance().getKeyboardHeight() as Number;
+```actionscript
+//get the height of the keyboard
+var keyboardHeight:Number = MeasureKeyboard.getInstance().getKeyboardHeight() as Number;
 
-	//get the y (vertical position) of the keyboard
-	var keyboardY:Number = MeasureKeyboard.getInstance().getKeyboardY() as Number;
+//get the y (vertical position) of the keyboard
+var keyboardY:Number = MeasureKeyboard.getInstance().getKeyboardY() as Number;
 
-	//by default, soft keyboard will push the screen upward, this method can disable it.
-	MeasureKeyboard.getInstance().setKeyboardAdjustNothing();
-	```
+//by default, soft keyboard will push the screen upward, this method can disable it.
+MeasureKeyboard.getInstance().setKeyboardAdjustNothing();
+```
 
 Installation
 -----
