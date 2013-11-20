@@ -45,6 +45,11 @@ package com.freshplanet.ane.KeyboardSize
 			extContext.call("setKeyboardAdjustNothing");
 			return;
 		}
+
+		public function removeClearButtonForiOS():void {
+			extContext.call("removeClearButtonForiOS");
+			return;
+		}
 		
 	}
 }

@@ -20,6 +20,7 @@ public class ExtensionContext extends FREContext {
 		functionMap.put("getKeyboardY", new getKeyboardY() );
 		functionMap.put("getKeyboardHeight", new getKeyboardHeight() );
 		functionMap.put("setKeyboardAdjustNothing",new setKeyboardAdjustNothing() );
+		functionMap.put("removeClearButtonForiOS",new removeClearButtonForiOS() );
 		
 		return functionMap;
 	}

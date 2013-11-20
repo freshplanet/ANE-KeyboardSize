@@ -36,11 +36,42 @@ DEFINE_ANE_FUNCTION(setKeyboardAdjustNothing)
     return NULL;
 }
 
+DEFINE_ANE_FUNCTION(removeClearButtonForiOS)
+{
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIView *topView = window.rootViewController.view;
+    
+    logViewHierarchy(topView);
+    return NULL;
+}
+
+void logViewHierarchy(UIView *view)
+{
+    NSArray *subviews = [view subviews];
+    
+    // Return if there are no subviews
+    if ([subviews count] == 0) return;
+    
+    for (UIView *subview in subviews) {
+        
+        //NSLog(@"%@", subview);
+        if ([subview isKindOfClass:[UITextField class]])
+        {
+            //NSLog(@"TextField found");
+            UITextField* textField= (UITextField*) subview;
+            textField.clearButtonMode=UITextFieldViewModeNever;
+            [textField becomeFirstResponder];
+        }
+        logViewHierarchy(subview);
+    }
+}
+
+
 #pragma mark - C interface
 
 void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctions, const FRENamedFunction** functionsToSet)
 {
-    *numFunctions = 3;
+    *numFunctions = 4;
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctions);
     
     func[0].name = (const uint8_t*)"getKeyboardY";
@@ -54,6 +85,10 @@ void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FRECo
     func[2].name = (const uint8_t*)"setKeyboardAdjustNothing";
     func[2].functionData = NULL;
     func[2].function = &setKeyboardAdjustNothing;
+    
+    func[3].name = (const uint8_t*)"removeClearButtonForiOS";
+    func[3].functionData = NULL;
+    func[3].function = &removeClearButtonForiOS;
     
     *functionsToSet = func;
 }

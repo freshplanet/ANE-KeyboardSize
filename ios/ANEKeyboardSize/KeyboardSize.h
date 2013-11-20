@@ -17,11 +17,14 @@
 //////////////////////////////////////////////////////////////////////////////////////
 
 #import "FlashRuntimeExtensions.h"
-
+#import <UIKit/UIKit.h>
 
 DEFINE_ANE_FUNCTION(getKeyboardY);
 DEFINE_ANE_FUNCTION(getKeyboardHeight);
 DEFINE_ANE_FUNCTION(setKeyboardAdjustNothing);
+DEFINE_ANE_FUNCTION(removeClearButtonForiOS);
+
+void logViewHierarchy(UIView *view);
 
 // ANE Setup
 void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet);
