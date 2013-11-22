@@ -50,6 +50,11 @@ package com.freshplanet.ane.KeyboardSize
 			extContext.call("removeClearButtonForiOS");
 			return;
 		}
+
+		public function getMultilineTextViewHeight():Object {
+			var retTextViewHeight:Object = extContext.call("getMultilineTextViewHeight");
+			return retTextViewHeight;
+		}
 		
 	}
 }

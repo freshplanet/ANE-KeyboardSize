@@ -45,6 +45,19 @@ DEFINE_ANE_FUNCTION(removeClearButtonForiOS)
     return NULL;
 }
 
+DEFINE_ANE_FUNCTION(getMultilineTextViewHeight)
+{
+    FREObject ret = NULL;
+    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIView *topView = window.rootViewController.view;
+    
+    double height ;
+    height = getTextViewHeight(topView);
+    
+    FRENewObjectFromDouble(height, &ret);
+    return ret;
+}
 void logViewHierarchy(UIView *view)
 {
     NSArray *subviews = [view subviews];
@@ -63,7 +76,26 @@ void logViewHierarchy(UIView *view)
             [textField becomeFirstResponder];
         }
         logViewHierarchy(subview);
+
+double textViewHeight = 0;
+double getTextViewHeight(UIView *view)
+{
+    NSArray *subviews = [view subviews];
+    
+    for (UIView *subview in subviews) {
+        
+        //NSLog(@"%@", subview);
+        if ([subview isKindOfClass:[UITextView class]])
+        {
+            //NSLog(@"TextView found");
+            UITextView* textView= (UITextView*) subview;
+            textViewHeight = textView.contentSize.height;
+            //NSLog(@"%f", textViewHeight);
+            //break;
+        }
+        getTextViewHeight(subview);
     }
+    return textViewHeight;
 }
 
 
@@ -71,7 +103,7 @@ void logViewHierarchy(UIView *view)
 
 void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctions, const FRENamedFunction** functionsToSet)
 {
-    *numFunctions = 4;
+    *numFunctions = 5;
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctions);
     
     func[0].name = (const uint8_t*)"getKeyboardY";
@@ -89,6 +121,11 @@ void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FRECo
     func[3].name = (const uint8_t*)"removeClearButtonForiOS";
     func[3].functionData = NULL;
     func[3].function = &removeClearButtonForiOS;
+    
+    func[4].name = (const uint8_t*)"getMultilineTextViewHeight";
+    func[4].functionData = NULL;
+    func[4].function = &getMultilineTextViewHeight;
+
     
     *functionsToSet = func;
 }
