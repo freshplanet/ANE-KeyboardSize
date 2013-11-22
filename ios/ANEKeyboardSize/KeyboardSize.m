@@ -41,7 +41,7 @@ DEFINE_ANE_FUNCTION(removeClearButtonForiOS)
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIView *topView = window.rootViewController.view;
     
-    logViewHierarchy(topView);
+    setClearButtonMode(topView);
     return NULL;
 }
 
@@ -58,7 +58,8 @@ DEFINE_ANE_FUNCTION(getMultilineTextViewHeight)
     FRENewObjectFromDouble(height, &ret);
     return ret;
 }
-void logViewHierarchy(UIView *view)
+
+void setClearButtonMode(UIView *view)
 {
     NSArray *subviews = [view subviews];
     
@@ -73,9 +74,10 @@ void logViewHierarchy(UIView *view)
             //NSLog(@"TextField found");
             UITextField* textField= (UITextField*) subview;
             textField.clearButtonMode=UITextFieldViewModeNever;
-            [textField becomeFirstResponder];
         }
-        logViewHierarchy(subview);
+        setClearButtonMode(subview);
+    }
+}
 
 double textViewHeight = 0;
 double getTextViewHeight(UIView *view)
