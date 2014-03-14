@@ -21,7 +21,7 @@
 
 DEFINE_ANE_FUNCTION(getKeyboardY);
 DEFINE_ANE_FUNCTION(getKeyboardHeight);
-DEFINE_ANE_FUNCTION(setKeyboardAdjustNothing);
+DEFINE_ANE_FUNCTION(setSoftInputMode);
 DEFINE_ANE_FUNCTION(removeClearButtonForiOS);
 DEFINE_ANE_FUNCTION(getMultilineTextViewHeight);
 
