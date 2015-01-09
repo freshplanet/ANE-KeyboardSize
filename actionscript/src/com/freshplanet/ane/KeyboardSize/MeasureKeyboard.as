@@ -6,6 +6,11 @@ package com.freshplanet.ane.KeyboardSize
 	{
 		public static var extContext:ExtensionContext = null;
 		private static var _instance : MeasureKeyboard;
+
+		//All Android variables, but iOS is not using the corresponding functinos, so it's easier to put them here and call setKeyboard layout with an arg
+		private static const SOFT_INPUT_STATE_UNCHANGED:int = 1;
+		private static const SOFT_INPUT_ADJUST_NOTHING:int = 48;
+		private static const SOFT_INPUT_ADJUST_PAN:int = 32;
 		
 		public static function getInstance() : MeasureKeyboard
 		{
@@ -41,10 +46,21 @@ package com.freshplanet.ane.KeyboardSize
 			return retY;
 		}
 
-		public function setKeyboardAdjustNothing():void {
-			extContext.call("setKeyboardAdjustNothing");
+		public function setKeyboardAdjustDefault():void {
+			extContext.call("setSoftInputMode",SOFT_INPUT_ADJUST_PAN);
 			return;
 		}
+
+		public function setKeyboardAdjustNothing():void {
+			extContext.call("setSoftInputMode",SOFT_INPUT_ADJUST_NOTHING);
+			return;
+		}
+
+		public function setKeyboardStateUnchanged():void {
+			extContext.call("setSoftInputMode",SOFT_INPUT_STATE_UNCHANGED);
+			return;
+		}
+
 
 		public function removeClearButtonForiOS():void {
 			extContext.call("removeClearButtonForiOS");

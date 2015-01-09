@@ -19,7 +19,7 @@ public class ExtensionContext extends FREContext {
 		Map<String, FREFunction> functionMap = new HashMap<String, FREFunction>();
 		functionMap.put("getKeyboardY", new getKeyboardY() );
 		functionMap.put("getKeyboardHeight", new getKeyboardHeight() );
-		functionMap.put("setKeyboardAdjustNothing",new setKeyboardAdjustNothing() );
+		functionMap.put("setSoftInputMode",new setSoftInputMode() );
 		functionMap.put("removeClearButtonForiOS",new removeClearButtonForiOS() );
 		
 		return functionMap;

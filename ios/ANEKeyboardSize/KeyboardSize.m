@@ -31,7 +31,7 @@ DEFINE_ANE_FUNCTION(getKeyboardHeight)
     return NULL;
 }
 
-DEFINE_ANE_FUNCTION(setKeyboardAdjustNothing)
+DEFINE_ANE_FUNCTION(setSoftInputMode)
 {
     return NULL;
 }
@@ -116,9 +116,9 @@ void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FRECo
     func[1].functionData = NULL;
     func[1].function = &getKeyboardHeight;
     
-    func[2].name = (const uint8_t*)"setKeyboardAdjustNothing";
+    func[2].name = (const uint8_t*)"setSoftInputMode";
     func[2].functionData = NULL;
-    func[2].function = &setKeyboardAdjustNothing;
+    func[2].function = &setSoftInputMode;
     
     func[3].name = (const uint8_t*)"removeClearButtonForiOS";
     func[3].functionData = NULL;
@@ -127,7 +127,6 @@ void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FRECo
     func[4].name = (const uint8_t*)"getMultilineTextViewHeight";
     func[4].functionData = NULL;
     func[4].function = &getMultilineTextViewHeight;
-
     
     *functionsToSet = func;
 }
