@@ -17,6 +17,9 @@ var keyboardY:Number = MeasureKeyboard.getInstance().getKeyboardY() as Number;
 MeasureKeyboard.getInstance().setKeyboardAdjustNothing();
 ```
 
+Notes:
+* included binary has been compiled for 64-bit iOS support
+
 Installation
 -----
 
