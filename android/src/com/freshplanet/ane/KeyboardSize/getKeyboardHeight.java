@@ -15,14 +15,14 @@ public class getKeyboardHeight implements FREFunction {
 	private static String tag = "ANE : getKeyboardHeight";
 	@Override
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
-		
+
 		Rect r = new Rect();
 		View rootview = arg0.getActivity().getWindow().getDecorView();
 		rootview.getWindowVisibleDisplayFrame(r);
-		
+
 		int heightNumber = rootview.getRootView().getHeight()-r.bottom;
 		FREObject height = null;
-		
+
 		try {
 			height = FREObject.newObject(heightNumber);
 		} catch (IllegalStateException e) {
@@ -31,7 +31,7 @@ public class getKeyboardHeight implements FREFunction {
 		} catch (FREWrongThreadException e) {
 			e.printStackTrace();
 		}
-		
+
 		Log.d(tag, heightNumber+" ");
 
 		return height;

@@ -11,18 +11,18 @@ import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
 
 public class getKeyboardY implements FREFunction{
-	
+
 	private static String tag = "ANE : getKeyboardY";
 	@Override
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
-		
+
 		Rect r = new Rect();
 		View rootview = arg0.getActivity().getWindow().getDecorView();
 		rootview.getWindowVisibleDisplayFrame(r);
-		
-		int YNumber = r.bottom - r.top;
+
+		int YNumber = r.bottom;
 		FREObject Y = null;
-		
+
 		try {
 			Y = FREObject.newObject(YNumber);
 		} catch (IllegalStateException e) {
@@ -31,9 +31,9 @@ public class getKeyboardY implements FREFunction{
 		} catch (FREWrongThreadException e) {
 			e.printStackTrace();
 		}
-		
+
 		Log.d(tag, YNumber+" ");
-		
+
 		return Y;
 	}
 
