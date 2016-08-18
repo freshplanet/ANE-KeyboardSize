@@ -18,8 +18,104 @@
 
 #import "KeyboardSize.h"
 
+FREContext flashContext = nil;
+
+@implementation KeyboardSize
+
+
++ (void)load
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                            selector:@selector(keyboardWasShown:)
+                                            name:UIKeyboardDidShowNotification
+                                            object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                            selector:@selector(keyboardWasHidden:)
+                                            name:UIKeyboardDidHideNotification
+                                            object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                            selector:@selector(keyboardChanged:)
+                                            name:UIKeyboardDidChangeFrameNotification
+                                            object:nil];
+}
+
++ (void)keyboardWasShown:(NSNotification *)notification
+{
+    [KeyboardSize sendKeyboardEvent:@"KEYBOARD_DID_SHOW" fromNotif:notification];
+}
+
++ (void)keyboardChanged: (NSNotification *)notification
+{
+    [KeyboardSize sendKeyboardEvent:@"KEYBOARD_DID_CHANGE" fromNotif:notification];
+}
+
++ (void) sendKeyboardEvent:(NSString *)name fromNotif:(NSNotification *)notification
+{
+    if(flashContext == nil) {
+        return;
+    }
+    
+    CGRect    screenRect;
+    CGRect    windowRect;
+    CGRect    viewRect;
+    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIView *topView = window.rootViewController.view;
+    
+    screenRect    = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    windowRect    = [window convertRect:screenRect fromWindow:nil];
+    viewRect      = [topView convertRect:windowRect fromView:nil];
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    NSMutableDictionary *windowDict = [[NSMutableDictionary alloc] init];
+    [windowDict setObject:[NSNumber numberWithFloat:screenRect.origin.x] forKey:@"x"];
+    [windowDict setObject:[NSNumber numberWithFloat:screenRect.origin.y] forKey:@"y"];
+    [windowDict setObject:[NSNumber numberWithFloat:screenRect.size.width] forKey:@"width"];
+    [windowDict setObject:[NSNumber numberWithFloat:screenRect.size.height] forKey:@"height"];
+    [dict setObject:windowDict forKey:@"windowRect"];
+    
+    NSMutableDictionary *viewDict = [[NSMutableDictionary alloc] init];
+    [viewDict setObject:[NSNumber numberWithFloat:viewRect.origin.x] forKey:@"x"];
+    [viewDict setObject:[NSNumber numberWithFloat:viewRect.origin.y] forKey:@"y"];
+    [viewDict setObject:[NSNumber numberWithFloat:viewRect.size.width] forKey:@"width"];
+    [viewDict setObject:[NSNumber numberWithFloat:viewRect.size.height] forKey:@"height"];
+    [dict setObject:viewDict forKey:@"viewRect"];
+    
+    NSMutableDictionary *screenDict = [[NSMutableDictionary alloc] init];
+    [screenDict setObject:[NSNumber numberWithFloat:windowRect.origin.x] forKey:@"x"];
+    [screenDict setObject:[NSNumber numberWithFloat:windowRect.origin.y] forKey:@"y"];
+    [screenDict setObject:[NSNumber numberWithFloat:windowRect.size.width] forKey:@"width"];
+    [screenDict setObject:[NSNumber numberWithFloat:windowRect.size.height] forKey:@"height"];
+    [dict setObject:screenDict forKey:@"screenRect"];
+    NSNumber *scale = [NSNumber numberWithFloat:[[UIScreen mainScreen] nativeScale]];
+    [dict setObject:scale forKey:@"nativeScale"];
+    
+    NSError *writeError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:nil error:&writeError];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    FREDispatchStatusEventAsync( flashContext, (const uint8_t*)[name UTF8String], (const uint8_t*)[jsonString UTF8String] );
+
+}
+
++ (void)keyboardWasHidden:(NSNotification *)notification
+{
+    if(flashContext != nil) {
+        FREDispatchStatusEventAsync( flashContext, (const uint8_t*)"KEYBOARD_DID_HIDE", (const uint8_t*)"" );
+    }
+}
+
+@end
+
+
 
 #pragma mark - KeyboardSize
+
+DEFINE_ANE_FUNCTION(init)
+{
+    return NULL;
+}
 
 DEFINE_ANE_FUNCTION(getKeyboardY)
 {
@@ -58,6 +154,9 @@ DEFINE_ANE_FUNCTION(getMultilineTextViewHeight)
     FRENewObjectFromDouble(height, &ret);
     return ret;
 }
+
+
+
 
 void setClearButtonMode(UIView *view)
 {
@@ -105,7 +204,9 @@ double getTextViewHeight(UIView *view)
 
 void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctions, const FRENamedFunction** functionsToSet)
 {
-    *numFunctions = 5;
+    flashContext = ctx;
+    
+    *numFunctions = 6;
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctions);
     
     func[0].name = (const uint8_t*)"getKeyboardY";
@@ -128,10 +229,18 @@ void KeyboardSizeContextInitializer(void* extData, const uint8_t* ctxType, FRECo
     func[4].functionData = NULL;
     func[4].function = &getMultilineTextViewHeight;
     
+    func[5].name = (const uint8_t*)"init";
+    func[5].functionData = NULL;
+    func[5].function = &getMultilineTextViewHeight;
+    
+    
     *functionsToSet = func;
 }
 
-void KeyboardSizeContextFinalizer(FREContext ctx) { }
+void KeyboardSizeContextFinalizer(FREContext ctx)
+{
+    flashContext = nil;
+}
 
 void KeyboardSizeInitializer(void** extDataToSet, FREContextInitializer* ctxInitializerToSet, FREContextFinalizer* ctxFinalizerToSet)
 {

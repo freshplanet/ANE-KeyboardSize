@@ -19,6 +19,10 @@
 #import "FlashRuntimeExtensions.h"
 #import <UIKit/UIKit.h>
 
+@interface KeyboardSize : NSObject
++ (void)load;
+@end
+
 DEFINE_ANE_FUNCTION(getKeyboardY);
 DEFINE_ANE_FUNCTION(getKeyboardHeight);
 DEFINE_ANE_FUNCTION(setSoftInputMode);
