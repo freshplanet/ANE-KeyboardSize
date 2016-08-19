@@ -2,5 +2,6 @@
     <sdkVersion>20.0</sdkVersion>
     <linkerOptions>
         <option>-framework MediaPlayer</option>
+        <option>-ios_version_min 8.0</option>
     </linkerOptions>
 </platform>

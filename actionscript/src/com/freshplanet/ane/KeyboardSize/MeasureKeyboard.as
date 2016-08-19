@@ -3,6 +3,7 @@ package com.freshplanet.ane.KeyboardSize
     import flash.external.ExtensionContext;
     import flash.events.EventDispatcher;
     import flash.events.StatusEvent;
+    import flash.system.Capabilities;
 
     public class MeasureKeyboard extends EventDispatcher
     {
@@ -19,8 +20,16 @@ package com.freshplanet.ane.KeyboardSize
             return _instance ? _instance : new MeasureKeyboard();
         }
 
+        public static function get isSupported() : Boolean
+        {
+            return Capabilities.manufacturer.indexOf("iOS") > -1 || Capabilities.manufacturer.indexOf("Android") > -1;
+        }
+
         public function MeasureKeyboard()
         {
+            if(!isSupported) {
+                return;
+            }
             if (!_instance) {
                 extContext = ExtensionContext.createExtensionContext("com.freshplanet.KeyboardSize", null);
                 if (!extContext) {
@@ -46,30 +55,45 @@ package com.freshplanet.ane.KeyboardSize
 
         public function getKeyboardHeight():Object
         {
+            if(!isSupported) {
+                return null;
+            }
             var retHeight:Object = extContext.call("getKeyboardHeight");
             return retHeight;
         }
 
         public function getKeyboardY():Object
         {
+            if(!isSupported) {
+                return null;
+            }
             var retY:Object = extContext.call("getKeyboardY");
             return retY;
         }
 
         public function setKeyboardAdjustDefault():void
         {
+            if(!isSupported) {
+                return;
+            }
             extContext.call("setSoftInputMode", SOFT_INPUT_ADJUST_PAN);
             return;
         }
 
         public function setKeyboardAdjustNothing():void
         {
+            if(!isSupported) {
+                return;
+            }
             extContext.call("setSoftInputMode", SOFT_INPUT_ADJUST_NOTHING);
             return;
         }
 
         public function setKeyboardStateUnchanged():void
         {
+            if(!isSupported) {
+                return;
+            }
             extContext.call("setSoftInputMode", SOFT_INPUT_STATE_UNCHANGED);
             return;
         }
@@ -77,12 +101,18 @@ package com.freshplanet.ane.KeyboardSize
 
         public function removeClearButtonForiOS():void
         {
+            if(!isSupported) {
+                return;
+            }
             extContext.call("removeClearButtonForiOS");
             return;
         }
 
         public function getMultilineTextViewHeight():Object
         {
+            if(!isSupported) {
+                return null;
+            }
             var retTextViewHeight:Object = extContext.call("getMultilineTextViewHeight");
             return retTextViewHeight;
         }
