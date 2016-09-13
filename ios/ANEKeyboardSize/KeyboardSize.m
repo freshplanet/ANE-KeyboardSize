@@ -209,25 +209,25 @@ void setClearButtonMode(UIView *view)
     }
 }
 
-double textViewHeight = 0;
+
 double getTextViewHeight(UIView *view)
 {
     NSArray *subviews = [view subviews];
-    
     for (UIView *subview in subviews) {
-        
-        //NSLog(@"%@", subview);
         if ([subview isKindOfClass:[UITextView class]])
         {
-            //NSLog(@"TextView found");
             UITextView* textView= (UITextView*) subview;
-            textViewHeight = textView.contentSize.height;
-            //NSLog(@"%f", textViewHeight);
-            //break;
+            CGFloat fixedWidth = textView.frame.size.width;
+            CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+            return newSize.height * [[UIScreen mainScreen] scale];
+        } else {
+            double textViewHeight = getTextViewHeight(subview);
+            if(textViewHeight != 0) {
+                return textViewHeight;
+            }
         }
-        getTextViewHeight(subview);
     }
-    return textViewHeight;
+    return 0;
 }
 
 
