@@ -5,6 +5,9 @@ package com.freshplanet.ane.KeyboardSize
 
     public class MeasureKeyboardEvent extends Event
     {
+        public static const KEYBOARD_WILL_SHOW:String = "KEYBOARD_WILL_SHOW";
+        public static const KEYBOARD_WILL_CHANGE:String = "KEYBOARD_WILL_CHANGE";
+        public static const KEYBOARD_WILL_HIDE:String = "KEYBOARD_WILL_HIDE";
         public static const KEYBOARD_DID_SHOW:String = "KEYBOARD_DID_SHOW";
         public static const KEYBOARD_DID_CHANGE:String = "KEYBOARD_DID_CHANGE";
         public static const KEYBOARD_DID_HIDE:String = "KEYBOARD_DID_HIDE";

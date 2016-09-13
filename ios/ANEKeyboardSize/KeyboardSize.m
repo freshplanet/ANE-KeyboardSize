@@ -26,23 +26,47 @@ FREContext flashContext = nil;
 + (void)load
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(keyboardWasShown:)
                                             name:UIKeyboardDidShowNotification
                                             object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(keyboardWasHidden:)
                                             name:UIKeyboardDidHideNotification
                                             object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillChange:)
+                                                 name:UIKeyboardWillChangeFrameNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(keyboardChanged:)
                                             name:UIKeyboardDidChangeFrameNotification
                                             object:nil];
 }
 
++ (void)keyboardWillShow:(NSNotification *)notification
+{
+    [KeyboardSize sendKeyboardEvent:@"KEYBOARD_WILL_SHOW" fromNotif:notification];
+}
+
+
 + (void)keyboardWasShown:(NSNotification *)notification
 {
     [KeyboardSize sendKeyboardEvent:@"KEYBOARD_DID_SHOW" fromNotif:notification];
 }
+
++ (void)keyboardWillChange:(NSNotification *)notification
+{
+    [KeyboardSize sendKeyboardEvent:@"KEYBOARD_WILL_CHANGE" fromNotif:notification];
+}
+
 
 + (void)keyboardChanged: (NSNotification *)notification
 {
@@ -97,6 +121,13 @@ FREContext flashContext = nil;
     
     FREDispatchStatusEventAsync( flashContext, (const uint8_t*)[name UTF8String], (const uint8_t*)[jsonString UTF8String] );
 
+}
+
++ (void)keyboardWillHide:(NSNotification *)notification
+{
+    if(flashContext != nil) {
+        FREDispatchStatusEventAsync( flashContext, (const uint8_t*)"KEYBOARD_WILL_HIDE", (const uint8_t*)"" );
+    }
 }
 
 + (void)keyboardWasHidden:(NSNotification *)notification
