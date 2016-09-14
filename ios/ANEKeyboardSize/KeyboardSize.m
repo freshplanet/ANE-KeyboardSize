@@ -209,9 +209,9 @@ void setClearButtonMode(UIView *view)
     }
 }
 
-
 double getTextViewHeight(UIView *view)
 {
+   
     NSArray *subviews = [view subviews];
     for (UIView *subview in subviews) {
         if ([subview isKindOfClass:[UITextView class]])
@@ -219,7 +219,10 @@ double getTextViewHeight(UIView *view)
             UITextView* textView= (UITextView*) subview;
             CGFloat fixedWidth = textView.frame.size.width;
             CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
-            return newSize.height * [[UIScreen mainScreen] scale];
+            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+            UIView *topView = window.rootViewController.view;
+            CGFloat scale = [topView contentScaleFactor];
+            return newSize.height * scale;
         } else {
             double textViewHeight = getTextViewHeight(subview);
             if(textViewHeight != 0) {
