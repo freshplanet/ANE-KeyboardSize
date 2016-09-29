@@ -3,6 +3,7 @@ package com.freshplanet.ane.KeyboardSize;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.View;
@@ -111,7 +112,11 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
 
     private void resetFullScreen() {
         final View decorView = getActivity().getWindow().getDecorView();
-        decorView.setSystemUiVisibility( View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
+        decorView.setSystemUiVisibility( View.SYSTEM_UI_FLAG_FULLSCREEN );
+        ActionBar actionBar = getActivity().getActionBar();
+        if(actionBar != null) {
+            actionBar.hide();
+        }
     }
 
     public final FREFunction resetFullScreenFunction = new FREFunction() {
