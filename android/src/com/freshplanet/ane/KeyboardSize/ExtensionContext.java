@@ -1,8 +1,5 @@
 package com.freshplanet.ane.KeyboardSize;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.util.Log;
@@ -12,6 +9,9 @@ import android.widget.TextView;
 import com.adobe.air.AndroidActivityWrapper;
 import com.adobe.air.KeyboardSizeStateChangeCallback;
 import com.adobe.fre.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExtensionContext extends FREContext implements View.OnLayoutChangeListener, KeyboardSizeStateChangeCallback {
 
@@ -32,6 +32,7 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
 		functionMap.put("removeClearButtonForiOS",new removeClearButtonForiOS() );
         functionMap.put("getMultilineTextViewHeight", getMultilineTextViewHeight);
         functionMap.put("resetFullScreen", resetFullScreenFunction);
+        functionMap.put("getScreenHeight", getScreenHeightFunction);
         functionMap.put("init", initFunction);
 
 		return functionMap;
@@ -94,6 +95,7 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
                     e.printStackTrace();
                 }
             }
+
             if(fullscreen) {
                 AndroidActivityWrapper.GetAndroidActivityWrapper().addActivityStateChangeListner(ExtensionContext.this);
                 freContext.getActivity().getWindow().getDecorView().addOnLayoutChangeListener(ExtensionContext.this);
@@ -110,9 +112,27 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
         }
     };
 
+    public final FREFunction getScreenHeightFunction = new FREFunction() {
+        @Override
+        public FREObject call(FREContext freContext, FREObject[] freObjects) {
+            View rootview = freContext.getActivity().getWindow().getDecorView();
+            try {
+                return FREObject.newObject(rootview.getHeight());
+            } catch (FREWrongThreadException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    };
+
     private void resetFullScreen() {
-        final View decorView = getActivity().getWindow().getDecorView();
-        decorView.setSystemUiVisibility( View.SYSTEM_UI_FLAG_FULLSCREEN );
+        View decorView = getActivity().getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // прячем панель навигации
+                | View.SYSTEM_UI_FLAG_FULLSCREEN // прячем строку состояния
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
         ActionBar actionBar = getActivity().getActionBar();
         if(actionBar != null) {
             actionBar.hide();
@@ -131,6 +151,11 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
         resetFullScreen();
+    }
+
+    public void log(String message)
+    {
+        this.dispatchStatusEventAsync("LOG", message);
     }
 
 }

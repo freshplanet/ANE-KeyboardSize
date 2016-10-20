@@ -13,7 +13,8 @@ package com.freshplanet.ane.KeyboardSize
         //All Android variables, but iOS is not using the corresponding functinos, so it's easier to put them here and call setKeyboard layout with an arg
         private static const SOFT_INPUT_STATE_UNCHANGED:int = 1;
         private static const SOFT_INPUT_ADJUST_NOTHING:int = 48;
-        private static const SOFT_INPUT_ADJUST_PAN:int = 16;
+        private static const SOFT_INPUT_ADJUST_PAN:int = 32;
+        private static const SOFT_INPUT_ADJUST_RESIZE:int = 16;
 
         public static function getInstance():MeasureKeyboard
         {
@@ -25,7 +26,7 @@ package com.freshplanet.ane.KeyboardSize
             return Capabilities.manufacturer.indexOf("iOS") > -1 || Capabilities.manufacturer.indexOf("Android") > -1;
         }
 
-        public function MeasureKeyboard()
+        public function MeasureKeyboard(fullScreen:Boolean = true)
         {
             if(!isSupported) {
                 return;
@@ -36,7 +37,7 @@ package com.freshplanet.ane.KeyboardSize
                     trace("ERROR - Extension context is null. Please check if extension.xml is setup correctly.");
                     return;
                 }
-                extContext.call("init");
+                extContext.call("init", fullScreen);
                 extContext.addEventListener(StatusEvent.STATUS, onStatusEvent, false, 0, true);
                 _instance = this;
             }
@@ -47,9 +48,15 @@ package com.freshplanet.ane.KeyboardSize
 
         public function onStatusEvent(event:StatusEvent):void
         {
-            //trace("*** " + event.code + " -> " + event.level);
             if(hasEventListener(event.code)) {
                 dispatchEvent(new MeasureKeyboardEvent(event.code, event.level));
+            }
+        }
+
+        public function resetFullScreen():void
+        {
+            if(Capabilities.manufacturer.indexOf("Android") > -1) {
+                extContext.call("resetFullScreen");
             }
         }
 
@@ -115,6 +122,14 @@ package com.freshplanet.ane.KeyboardSize
             }
             var retTextViewHeight:Object = extContext.call("getMultilineTextViewHeight");
             return retTextViewHeight;
+        }
+
+        public function getScreenHeight():int
+        {
+            if(!isSupported || Capabilities.manufacturer.indexOf("Android") == -1) {
+                return Capabilities.screenResolutionY;
+            }
+            return extContext.call("getScreenHeight") as int;
         }
 
     }

@@ -11,6 +11,7 @@ package com.freshplanet.ane.KeyboardSize
         public static const KEYBOARD_DID_SHOW:String = "KEYBOARD_DID_SHOW";
         public static const KEYBOARD_DID_CHANGE:String = "KEYBOARD_DID_CHANGE";
         public static const KEYBOARD_DID_HIDE:String = "KEYBOARD_DID_HIDE";
+        public static const LOG:String = "LOG";
 
         public var data:Object;
 
