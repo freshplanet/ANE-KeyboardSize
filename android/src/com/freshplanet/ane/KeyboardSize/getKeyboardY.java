@@ -1,20 +1,12 @@
 package com.freshplanet.ane.KeyboardSize;
 
-import android.content.Context;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-
-import android.view.WindowManager;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class getKeyboardY implements FREFunction{
 
