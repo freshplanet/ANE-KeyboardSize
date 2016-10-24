@@ -99,13 +99,6 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
             if(fullscreen) {
                 AndroidActivityWrapper.GetAndroidActivityWrapper().addActivityStateChangeListner(ExtensionContext.this);
                 freContext.getActivity().getWindow().getDecorView().addOnLayoutChangeListener(ExtensionContext.this);
-                getActivity().getWindow().getDecorView().setOnSystemUiVisibilityChangeListener
-                        (new View.OnSystemUiVisibilityChangeListener() {
-                            @Override
-                            public void onSystemUiVisibilityChange(int visibility) {
-                                resetFullScreen();
-                            }
-                        });
             }
 
             return null;
@@ -128,7 +121,9 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
     private void resetFullScreen() {
         View decorView = getActivity().getWindow().getDecorView();
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE);
         ActionBar actionBar = getActivity().getActionBar();
