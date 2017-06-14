@@ -18,9 +18,16 @@ public class getKeyboardHeight implements FREFunction {
 
 		Rect r = new Rect();
 		View rootview = arg0.getActivity().getWindow().getDecorView();
+
+
 		rootview.getWindowVisibleDisplayFrame(r);
 
 		int heightNumber = rootview.getHeight() - r.bottom;
+		if (arg0.getActivity().getActionBar() != null)
+		{
+		    heightNumber += arg0.getActivity().getActionBar().getHeight();
+		}
+		heightNumber -= r.top;
 		FREObject height = null;
 
 		try {
@@ -33,7 +40,7 @@ public class getKeyboardHeight implements FREFunction {
 		}
 
 		Log.d(tag, heightNumber+" ");
-
+		
 		return height;
 	}
 

@@ -26,7 +26,7 @@ package com.freshplanet.ane.KeyboardSize
             return Capabilities.manufacturer.indexOf("iOS") > -1 || Capabilities.manufacturer.indexOf("Android") > -1;
         }
 
-        public function MeasureKeyboard(fullScreen:Boolean = true)
+        public function MeasureKeyboard(fullScreen:Boolean = false)
         {
             if(!isSupported) {
                 return;
@@ -53,10 +53,10 @@ package com.freshplanet.ane.KeyboardSize
             }
         }
 
-        public function resetFullScreen():void
+        public function resetFullScreen(showBars:Boolean = false):void
         {
             if(Capabilities.manufacturer.indexOf("Android") > -1) {
-                extContext.call("resetFullScreen");
+                extContext.call("resetFullScreen", showBars);
             }
         }
 

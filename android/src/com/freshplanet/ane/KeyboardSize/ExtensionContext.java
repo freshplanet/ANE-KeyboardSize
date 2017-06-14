@@ -133,17 +133,43 @@ public class ExtensionContext extends FREContext implements View.OnLayoutChangeL
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE);
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         ActionBar actionBar = getActivity().getActionBar();
         if(actionBar != null) {
             actionBar.hide();
         }
     }
 
+    private void resetBars() {
+        View decorView = getActivity().getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        ActionBar actionBar = getActivity().getActionBar();
+        if(actionBar != null) {
+            actionBar.show();
+        }
+    }
+
     public final FREFunction resetFullScreenFunction = new FREFunction() {
         @Override
         public FREObject call(FREContext freContext, FREObject[] freObjects) {
-            resetFullScreen();
+            Boolean showUI = false;
+            if(freObjects.length > 0) {
+                try {
+                    showUI = freObjects[0].getAsBool();
+                } catch (FRETypeMismatchException e) {
+                    e.printStackTrace();
+                } catch (FREInvalidObjectException e) {
+                    e.printStackTrace();
+                } catch (FREWrongThreadException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(showUI) {
+               // resetBars();
+            } else {
+                resetFullScreen();
+            }
+        
             return null;
         }
     };

@@ -21,7 +21,14 @@ public class getKeyboardY implements FREFunction{
 		FREObject Y = null;
 
 		try {
-			Y = FREObject.newObject(r.bottom);
+			int bot = r.bottom;
+			if (arg0.getActivity().getActionBar() != null)
+			{
+			    bot -= arg0.getActivity().getActionBar().getHeight();
+			}
+			bot -= r.top;
+
+			Y = FREObject.newObject(bot);
 		} catch (IllegalStateException e) {
 			Log.d(tag, e.getMessage());
 			e.printStackTrace();
