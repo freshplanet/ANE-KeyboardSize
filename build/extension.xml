@@ -16,22 +16,22 @@
 //  
 //////////////////////////////////////////////////////////////////////////////////////-->
 
-<extension xmlns="http://ns.adobe.com/air/extension/20.0">
-    <id>com.freshplanet.KeyboardSize</id>
+<extension xmlns="http://ns.adobe.com/air/extension/22.0">
+    <id>com.freshplanet.ane.AirKeyboardSize</id>
     <versionNumber>1.0</versionNumber>
     <platforms>
         <platform name="iPhone-ARM">
             <applicationDeployment>
-                <nativeLibrary>libKeyboardSize.a</nativeLibrary>
-                <initializer>KeyboardSizeInitializer</initializer>
-                <finalizer>KeyboardSizeFinalizer</finalizer>
+                <nativeLibrary>libAirKeyboardSize.a</nativeLibrary>
+                <initializer>AirKeyboardSizeInitializer</initializer>
+                <finalizer>AirKeyboardSizeFinalizer</finalizer>
             </applicationDeployment>
         </platform>
         <platform name="Android-ARM">
             <applicationDeployment>
-                <nativeLibrary>libKeyboardSize.jar</nativeLibrary>
-                <initializer>com.freshplanet.ane.KeyboardSize.Extension</initializer>
-                <finalizer>com.freshplanet.ane.KeyboardSize.Extension</finalizer>
+                <nativeLibrary>libAirKeyboardSize.jar</nativeLibrary>
+                <initializer>com.freshplanet.ane.AirKeyboardSize.Extension</initializer>
+                <finalizer>com.freshplanet.ane.AirKeyboardSize.Extension</finalizer>
             </applicationDeployment>
         </platform>
 
