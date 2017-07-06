@@ -157,7 +157,6 @@ FREContext flashContext = nil;
 
 + (double)getTextViewHeight:(UIView*)view {
     
-    
     NSArray* subviews = [view subviews];
     for (UIView* subview in subviews) {
         
