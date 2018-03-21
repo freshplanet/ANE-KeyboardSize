@@ -27,6 +27,9 @@ import android.widget.TextView;
 import com.adobe.air.AirKeyboardSizeStateChangeCallback;
 import com.adobe.air.AndroidActivityWrapper;
 import com.adobe.fre.*;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +78,8 @@ public class ExtensionContext extends FREContext implements AirKeyboardSizeState
 		functionMap.put("resetFullScreen", resetFullScreenFunction);
 		functionMap.put("getScreenHeight", getScreenHeightFunction);
 		functionMap.put("init", initFunction);
-		
+		functionMap.put("isNavBarDisplayed", isNavBarDisplayed);
+
 		return functionMap;
 	}
 	
@@ -332,6 +336,41 @@ public class ExtensionContext extends FREContext implements AirKeyboardSizeState
 			}
 			
 			return null;
+		}
+	};
+
+	/**
+	 *
+	 */
+	private final FREFunction isNavBarDisplayed = new FREFunction() {
+		@Override
+		public FREObject call(FREContext context, FREObject[] args) {
+			Activity activity = _aaw.getActivity();
+			Display d = activity.getWindowManager().getDefaultDisplay();
+			DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+			d.getRealMetrics(realDisplayMetrics);
+			View rootView = activity.getWindow().getDecorView();
+			int viewHeight = rootView.getHeight();
+			boolean result = false;
+			if (viewHeight == 0) {
+				result = true;
+			}
+			else {
+				int realHeight = realDisplayMetrics.heightPixels;
+				result = realHeight != viewHeight;
+			}
+
+			FREObject freObject = null;
+			try {
+				freObject = FREObject.newObject(result);
+			}
+			catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+			catch (FREWrongThreadException e) {
+				e.printStackTrace();
+			}
+			return freObject;
 		}
 	};
 	

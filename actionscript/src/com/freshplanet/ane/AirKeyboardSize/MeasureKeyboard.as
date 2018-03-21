@@ -175,6 +175,17 @@ package com.freshplanet.ane.AirKeyboardSize {
 			
 			return extContext.call("getScreenHeight") as int;
 		}
+
+		/**
+		 *
+		 * @return
+		 */
+		public function isNavBarDisplayed():Boolean {
+			if(Capabilities.manufacturer.indexOf("Android") == -1) {
+				return false;
+			}
+			return extContext.call("isNavBarDisplayed") as Boolean;
+		}
 		
 		/**
 		 *
