@@ -34,6 +34,20 @@
                 <finalizer>com.freshplanet.ane.AirKeyboardSize.Extension</finalizer>
             </applicationDeployment>
         </platform>
+        <platform name="Android-ARM64">
+            <applicationDeployment>
+                <nativeLibrary>libAirKeyboardSize.jar</nativeLibrary>
+                <initializer>com.freshplanet.ane.AirKeyboardSize.Extension</initializer>
+                <finalizer>com.freshplanet.ane.AirKeyboardSize.Extension</finalizer>
+            </applicationDeployment>
+        </platform>
+        <platform name="Android-x86">
+            <applicationDeployment>
+                <nativeLibrary>libAirKeyboardSize.jar</nativeLibrary>
+                <initializer>com.freshplanet.ane.AirKeyboardSize.Extension</initializer>
+                <finalizer>com.freshplanet.ane.AirKeyboardSize.Extension</finalizer>
+            </applicationDeployment>
+        </platform>
 
         <platform name="default">
             <applicationDeployment/>

@@ -4,6 +4,13 @@
     <!-- Config -->
     <property file="build.config"/>
 
+    <!-- Load ant-contrib -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="ant-contrib-0.6.jar"/>
+        </classpath>
+    </taskdef>
+
     <!-- All -->
     <target name="all" depends="ios,android,swc,package" description="Full build of extension"/>
 
@@ -37,27 +44,67 @@
 
 
     <!-- Android -->
+    <!-- Android -->
     <target name="android" description="Build Android Library">
 
-        <property name="android.platform.home" value="${android.sdk.home}/platforms/android-${android.platform}"/>
+        <!-- paths -->
+        <property name="build.intermediates" value="../android/lib/build/intermediates"/>
+        <property name="build.release" value="${build.intermediates}/packaged-classes/release"/>
 
-        <!-- make the build directory for the java code -->
-        <mkdir dir="temp/android/build"/>
+        <!-- make the build directory -->
+        <mkdir dir="temp/android"/>
 
-        <javac destdir="temp/android/build/" includeantruntime="false" source="1.7" target="1.7">
-            <src path="../android/src"/>
-            <classpath>
-                <pathelement location="${android.platform.home}/android.jar"/>
-                <pathelement location="${air.sdk.home}/lib/android/FlashRuntimeExtensions.jar"/>
-                <pathelement location="${air.sdk.home}/lib/android/lib/runtimeClasses.jar"/>
-            </classpath>
-        </javac>
+        <exec executable="/usr/libexec/java_home" outputproperty="java.home">
+            <!-- <arg line="-v 1.8" /> -->
+        </exec>
 
-        <!-- make the jar -->
-        <jar basedir="temp/android/build" destfile="temp/android/lib${name}.jar"/>
+        <!-- clean the build -->
+        <exec executable="./gradlew" dir="../android">
+            <env key="JAVA_HOME" path="${java.home}"/>
+            <env key="ANDROID_HOME" path="${android.sdk.home}"/>
+            <arg line="clean"/>
+        </exec>
 
-        <!-- remove the build classes -->
-        <delete dir="temp/android/build/"/>
+        <!-- compile the java code -->
+        <exec executable="./gradlew" dir="../android">
+            <env key="JAVA_HOME" path="${java.home}"/>
+            <env key="ANDROID_HOME" path="${android.sdk.home}"/>
+            <arg line=":lib:assembleRelease"/>
+        </exec>
+
+        <!-- get the jar -->
+        <copy file="${build.release}/classes.jar" tofile="temp/android/lib${name}.jar"/>
+
+        <!-- Copy over required resources -->
+        <if>
+            <equals arg1="${include.shared.resources}" arg2="true"/>
+            <then>
+                <copy todir="temp/android/${name}-res">
+                    <fileset dir="${build.intermediates}/res/merged/release"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- Copy dependencies into temp folder -->
+        <exec executable="./gradlew" dir="../android">
+            <env key="JAVA_HOME" path="${java.home}"/>
+            <env key="ANDROID_HOME" path="${android.sdk.home}"/>
+            <arg line="copyDependencies"/>
+        </exec>
+
+
+    </target>
+
+    <target name="unzipAAR">
+        <basename property="aarFileName" file="${aarFile}"
+                  suffix=".aar"/>
+        <unzip src="${aarFile}" dest="../android/lib/dependencies/${aarFileName}" overwrite="true"/>
+        <if>
+            <available file="../android/lib/dependencies/${aarFileName}/classes.jar"/>
+            <then>
+                <move file="../android/lib/dependencies/${aarFileName}/classes.jar" tofile="../android/lib/dependencies/${aarFileName}.jar"/>
+            </then>
+        </if>
     </target>
 
     <!-- Actionscript -->
@@ -100,6 +147,8 @@
             <arg line="-swc swc/${name}.swc"/>
             <arg line="-platform iPhone-ARM -platformoptions ../platform-ios.xml -C ios/ . "/>
             <arg line="-platform Android-ARM -C android/ ."/>
+            <arg line="-platform Android-x86 -C android/ ."/>
+            <arg line="-platform Android-ARM64 -C android/ ."/>
             <arg line="-platform default -C default/ ."/>
         </exec>
 
